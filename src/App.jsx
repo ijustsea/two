@@ -1,10 +1,20 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 
+
 function App() {
   const [count, setCount] = useState(0)
+    const [message, setMessage] = useState("");
+
+    useEffect(() => {
+      fetch("http://16.184.54.151:8081")
+        .then(res => res.text())
+        .then(data => setMessage(data))
+        .catch(error => console.error("Error:", error));
+    }, []);
+
 
   return (
     <>
@@ -16,7 +26,9 @@ function App() {
           <img src={reactLogo} className="logo react" alt="React logo" />
         </a>
       </div>
-      <h1>Great Test!</h1>
+      <h1>
+                <p>{message}</p>
+      </h1>
       <div className="card">
         <button onClick={() => setCount((count) => count + 1)}>
           count is {count}
